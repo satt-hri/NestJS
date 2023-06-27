@@ -7,10 +7,9 @@ export class UserController {
     constructor(private readonly userService: UserService) {}
     @Get('csv')
     async getCsv(@Res() res: Response) {
-      const strigifier = await this.userService.exportCSV();
-      //console.log(strigifier)
-      //res.setHeader('Content-Type', 'text/csv');
-      res.send();
-      return '123';
+      const strigifier = await this.userService.getCsvStream();
+    
+        res.setHeader('Content-Type', 'text/csv');
+        return strigifier.pipe(res);
     }
 }
